@@ -4,15 +4,18 @@
     {% for field in form 
         if field.widget.input_type != 'hidden' %}
 
-    <p>
+    <div class="container">
         {{field.label}}
-        {{field(class_="form-control")}}
+        {{field(class_="form-control mb-4")}}
 
         {% for error in field.errors %}
         <span class="form-test text-danger">{{error}}</span>
         {% endfor %}
-    </p>
+    </div>
     {% endfor %}
 
-    <button class="btn btn-success" type="submit">{% block button %} BUTTON {% endblock %}</button>
+    <div class="container">
+        <button class="btn btn-success" type="submit">{% block button %} BUTTON {% endblock %}</button>
+    </div>
+    
 </form>
