@@ -11,7 +11,7 @@ app.config.from_object("config")
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
-db.create_all()
+# db.create_all()
 
 @app.route('/')
 def back_to_register():
@@ -44,11 +44,12 @@ def create_new_user():
     return render_template('register.html', form=form)
 
 
-@app.route('/secret')
-def show_secret_page():
+@app.route(f'/users/<username>')
+def show_secret_page(username):
     """Shows secret page if user is logged in"""
-    form = RegisterForm()
-    return render_template('secret.html', form=form)
+    # user = User.query.get_or_404(username)
+    user = User.query.filter_by(username=username).first()
+    return render_template('secret.html', user=user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -62,7 +63,7 @@ def login_user():
         if user:
             flash(f"Welcome back, {user.username}!", "primary")
             session["user_id"] = user.id
-            return redirect('/secret')
+            return redirect(f'/users/{username}')
         else:
             form.username.errors = ["Invalid username/password"]
     return render_template('login.html', form=form)
