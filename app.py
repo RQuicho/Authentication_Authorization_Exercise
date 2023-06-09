@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, session, flash
+from flask import Flask, redirect, request, render_template, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from config import *
 from models import db, connect_db, User
@@ -60,7 +60,7 @@ def login_user():
         password = form.password.data
         user = User.authenticate(username, password)
         if user:
-            flash("Welcome back, {user.username}!", "primary")
+            flash(f"Welcome back, {user.username}!", "primary")
             session["user_id"] = user.id
             return redirect('/secret')
         else:
@@ -68,7 +68,15 @@ def login_user():
     return render_template('login.html', form=form)
 
 
-
+@app.route('/logout', methods=['GET', 'POST'])
+def logout_user():
+    """Logout user and clear session"""
+    form = LoginForm()
+    if request.method == 'POST':
+        session.pop('user_id')
+        flash('Logged out!', 'info')
+        return redirect('/')
+    return render_template('logout.html', form=form)
 
 
     

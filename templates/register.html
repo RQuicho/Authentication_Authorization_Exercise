@@ -9,6 +9,25 @@
 <p class="lead">Register to use this app</p>
 </div>
 
-{% endblock %}
+<form method="POST">
+    {{form.hidden_tag()}}
 
-{% block button %} Register {% endblock %}
+    {% for field in form 
+        if field.widget.input_type != 'hidden' %}
+
+    <div class="container">
+        {{field.label}}
+        {{field(class_="form-control mb-4")}}
+
+        {% for error in field.errors %}
+        <span class="form-test text-danger">{{error}}</span>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="container">
+        <button class="btn btn-success" type="submit">Register</button>
+    </div>
+</form>
+
+{% endblock %}
