@@ -13,12 +13,14 @@ def connect_db(app):
 class User(db.Model):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
-    username = db.Column(db.String(length=20), primary_key=True)
+    # id = db.Column(db.Integer, primary_key=True, autoincrement=True, unique=True)
+    username = db.Column(db.String(length=20), primary_key=True, unique=True)
     password = db.Column(db.Text, nullable=False)
     email = db.Column(db.String(length=50), nullable=False, unique=True)
     first_name = db.Column(db.String(length=30), nullable=False)
     last_name = db.Column(db.String(length=30), nullable=False)
+
+    feedback = db.relationship('Feedback', backref='user')
 
     @classmethod
     def register(cls, username, pwd, email, first_name, last_name):
@@ -37,3 +39,11 @@ class User(db.Model):
             return u
         else:
             return False
+
+class Feedback(db.Model):
+    __tablename__ = "feedback"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(length=100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    username = db.Column(db.String(length=20), db.ForeignKey('users.username'), nullable=False)

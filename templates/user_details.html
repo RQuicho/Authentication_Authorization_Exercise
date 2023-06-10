@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Secret {% endblock %}
+
+{% block content %}
+
+<h1>Your Information</h1>
+<p>Username: {{user.username}}</p>
+<p>Email: {{user.email}}</p>
+<p>First Name: {{user.first_name}}</p>
+<p>Last Name: {{user.last_name}}</p>
+
+<br>
+
+<h1>Feedback</h1>
+
+<ul>
+    {% for feedback in user.feedback %}
+
+    <li>
+        <p>Title: {{feedback.title}}</p>
+        <p>Content: {{feedback.content}}</p>
+    </li>
+    <form>
+        <button class="btn" formaction="/feedback/{{feedback.id}}/update" formmethod="GET">Edit</button>
+        <button class="btn" formaction="/feedback/{{feedback.id}}/delete" formmethod="GET">Delete</button>       
+    </form>
+
+    {% endfor %}
+</ul>
+
+<button><a href="/users/{{user.username}}/feedback/add">Add Feedback</a></button>
+
+<form>
+    <button formaction="/feedback/{{feedback.id}}/delete" formmethod="POST">Delete User</button>     
+</form>
+
+
+{% endblock %}
