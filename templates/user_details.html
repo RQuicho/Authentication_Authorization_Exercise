@@ -22,17 +22,17 @@
         <p>Content: {{feedback.content}}</p>
     </li>
     <form>
-        <button class="btn" formaction="/feedback/{{feedback.id}}/update" formmethod="GET">Edit</button>
-        <button class="btn" formaction="/feedback/{{feedback.id}}/delete" formmethod="GET">Delete</button>       
+        <button class="btn btn-warning" formaction="/feedback/{{feedback.id}}/update" formmethod="GET">Edit</button>
+        <button class="btn btn-danger" formaction="/feedback/{{feedback.id}}/delete" formmethod="POST">Delete</button>       
     </form>
 
     {% endfor %}
 </ul>
 
-<button><a href="/users/{{user.username}}/feedback/add">Add Feedback</a></button>
+<button class="btn btn-info"><a href="/users/{{user.username}}/feedback/add">Add Feedback</a></button>
 
 <form>
-    <button formaction="/feedback/{{feedback.id}}/delete" formmethod="POST">Delete User</button>     
+    <button class="btn btn-danger" formaction="/users/{{user.username}}/delete" formmethod="POST">Delete User</button>     
 </form>
 
 
